@@ -1,0 +1,35 @@
+========================================================================================
+                               SMARTSTAY HOTEL CHAIN                                    
+                          OFFICIAL RESERVATION INVOICE                                  
+========================================================================================
+ Invoice No      : INV-BK-1001                    Date/Time : 2026-10-29 11:11:16
+ Booking ID      : BK-1001                        Status    : Confirmed
+----------------------------------------------------------------------------------------
+ GUEST DETAILS
+ Full Name       : Kasun Perera                   NIC/Passport : 199512345678
+ Contact Number  : +94771234567                   Email        : kasun.p@gmail.com
+----------------------------------------------------------------------------------------
+ ROOM & STAY DETAILS
+ Room ID         : D-201                          Room Type    : Deluxe
+ Bed Type        : Queen Bed                      Daily Rate   : LKR 9,000.00
+ Check-In Date   : 2026-11-03                     Check-Out    : 2026-11-09
+ Duration        : 6 Night(s)                   Guests       : 3 (Base Capacity: 2)
+ Breakfast       : Complimentary Included
+========================================================================================
+ BILLING BREAKDOWN (LKR)
+========================================================================================
+ 1. Base Room Charge (6 night(s) @ LKR 9,000.00/night)         : LKR      54,000.00
+ 2. Extra Guest Charge (1 extra @ LKR 1,500.00 x 6 nights)     : LKR       9,000.00
+ 3. Stay Discount (12% discount for 6 nights >= 5)                : -LKR      6,480.00
+    --------------------------------------------------------------------
+    Net Charge Subject to Tax                                       : LKR      56,520.00
+ 4. Tax Added (Deluxe - 12%)                                         : +LKR      6,782.40
+    --------------------------------------------------------------------
+    Total Gross Booking Cost                                        : LKR      63,302.40
+ 5. Booking Advance Deducted (Paid at Reservation)                 : -LKR     10,000.00
+========================================================================================
+ FINAL PAYABLE AMOUNT AT CHECK-IN                                   : LKR      53,302.40
+========================================================================================
+ Thank you for choosing SmartStay Hotels Sri Lanka!
+ Note: Booking advance is refundable if cancelled 24+ hours prior to check-in.
+========================================================================================

@@ -1,0 +1,347 @@
+@startuml
+skinparam classAttributeIconSize 0
+skinparam monochrome false
+skinparam roundcorner 8
+skinparam class {
+    BackgroundColor LightYellow
+    ArrowColor DarkSlateGray
+    BorderColor DarkSlateBlue
+}
+
+title Kingston University CI6115 Programming III - SmartStay Hotel Booking System\nClass Diagram (Student ID: 2703047)
+
+package "k2703047.smartstay.model" {
+
+    enum K2703047_RoomType {
+        STANDARD
+        DELUXE
+        SUITE
+        FAMILY_SUITE
+        - displayName: String
+        - dailyRate: double
+        - complimentaryBreakfast: boolean
+        - extraGuestCharge: double
+        - taxRate: double
+        - standardCapacity: int
+        + getDisplayName(): String
+        + getDailyRate(): double
+        + hasComplimentaryBreakfast(): boolean
+        + getExtraGuestCharge(): double
+        + getTaxRate(): double
+        + getStandardCapacity(): int
+    }
+
+    enum K2703047_BedType {
+        SINGLE
+        DOUBLE
+        QUEEN
+        KING
+        - displayName: String
+        - bedCapacity: int
+        + getDisplayName(): String
+        + getBedCapacity(): int
+    }
+
+    enum K2703047_RoomStatus {
+        AVAILABLE
+        RESERVED
+        UNDER_MAINTENANCE
+        - displayName: String
+        + getDisplayName(): String
+    }
+
+    enum K2703047_ReservationStatus {
+        CONFIRMED
+        CANCELLED
+        COMPLETED
+        - displayName: String
+        + getDisplayName(): String
+    }
+
+    abstract class K2703047_Room {
+        - roomId: String
+        - roomType: K2703047_RoomType
+        - bedType: K2703047_BedType
+        - dailyRate: double
+        - status: K2703047_RoomStatus
+        - baseCapacity: int
+        + K2703047_Room(roomId: String, roomType: K2703047_RoomType, bedType: K2703047_BedType, dailyRate: double, status: K2703047_RoomStatus, baseCapacity: int)
+        + {abstract} calculateTax(netRoomCharge: double): double
+        + {abstract} getExtraGuestRate(): double
+        + {abstract} hasComplimentaryBreakfast(): boolean
+        + {abstract} getTaxRate(): double
+        + {abstract} getRoomPackageDescription(): String
+        + calculateExtraGuestCharge(guestCount: int, numberOfNights: long): double
+        + isAvailable(): boolean
+        + getRoomId(): String
+        + setRoomId(roomId: String): void
+        + getRoomType(): K2703047_RoomType
+        + setRoomType(roomType: K2703047_RoomType): void
+        + getBedType(): K2703047_BedType
+        + setBedType(bedType: K2703047_BedType): void
+        + getDailyRate(): double
+        + setDailyRate(dailyRate: double): void
+        + getStatus(): K2703047_RoomStatus
+        + setStatus(status: K2703047_RoomStatus): void
+        + getBaseCapacity(): int
+        + setBaseCapacity(baseCapacity: int): void
+    }
+
+    class K2703047_StandardRoom extends K2703047_Room {
+        + {static} DEFAULT_DAILY_RATE: double = 6000.0
+        + {static} COMPLIMENTARY_BREAKFAST: boolean = false
+        + {static} EXTRA_GUEST_CHARGE: double = 1000.0
+        + {static} TAX_RATE: double = 0.10
+        + {static} BASE_CAPACITY: int = 2
+        + K2703047_StandardRoom(roomId: String, bedType: K2703047_BedType)
+        + K2703047_StandardRoom(roomId: String, bedType: K2703047_BedType, dailyRate: double, status: K2703047_RoomStatus, baseCapacity: int)
+        + calculateTax(netRoomCharge: double): double
+        + getExtraGuestRate(): double
+        + hasComplimentaryBreakfast(): boolean
+        + getTaxRate(): double
+        + getRoomPackageDescription(): String
+    }
+
+    class K2703047_DeluxeRoom extends K2703047_Room {
+        + {static} DEFAULT_DAILY_RATE: double = 9000.0
+        + {static} COMPLIMENTARY_BREAKFAST: boolean = true
+        + {static} EXTRA_GUEST_CHARGE: double = 1500.0
+        + {static} TAX_RATE: double = 0.12
+        + {static} BASE_CAPACITY: int = 2
+        + K2703047_DeluxeRoom(roomId: String, bedType: K2703047_BedType)
+        + K2703047_DeluxeRoom(roomId: String, bedType: K2703047_BedType, dailyRate: double, status: K2703047_RoomStatus, baseCapacity: int)
+        + calculateTax(netRoomCharge: double): double
+        + getExtraGuestRate(): double
+        + hasComplimentaryBreakfast(): boolean
+        + getTaxRate(): double
+        + getRoomPackageDescription(): String
+    }
+
+    class K2703047_SuiteRoom extends K2703047_Room {
+        + {static} DEFAULT_DAILY_RATE: double = 14000.0
+        + {static} COMPLIMENTARY_BREAKFAST: boolean = true
+        + {static} EXTRA_GUEST_CHARGE: double = 2000.0
+        + {static} TAX_RATE: double = 0.15
+        + {static} BASE_CAPACITY: int = 3
+        + K2703047_SuiteRoom(roomId: String, bedType: K2703047_BedType)
+        + K2703047_SuiteRoom(roomId: String, bedType: K2703047_BedType, dailyRate: double, status: K2703047_RoomStatus, baseCapacity: int)
+        + calculateTax(netRoomCharge: double): double
+        + getExtraGuestRate(): double
+        + hasComplimentaryBreakfast(): boolean
+        + getTaxRate(): double
+        + getRoomPackageDescription(): String
+    }
+
+    class K2703047_FamilySuiteRoom extends K2703047_Room {
+        + {static} DEFAULT_DAILY_RATE: double = 18000.0
+        + {static} COMPLIMENTARY_BREAKFAST: boolean = true
+        + {static} EXTRA_GUEST_CHARGE: double = 2500.0
+        + {static} TAX_RATE: double = 0.15
+        + {static} BASE_CAPACITY: int = 4
+        + K2703047_FamilySuiteRoom(roomId: String, bedType: K2703047_BedType)
+        + K2703047_FamilySuiteRoom(roomId: String, bedType: K2703047_BedType, dailyRate: double, status: K2703047_RoomStatus, baseCapacity: int)
+        + calculateTax(netRoomCharge: double): double
+        + getExtraGuestRate(): double
+        + hasComplimentaryBreakfast(): boolean
+        + getTaxRate(): double
+        + getRoomPackageDescription(): String
+    }
+
+    class K2703047_RoomFactory {
+        + {static} createRoom(roomId: String, roomType: K2703047_RoomType, bedType: K2703047_BedType): K2703047_Room
+        + {static} createRoom(roomId: String, roomType: K2703047_RoomType, bedType: K2703047_BedType, dailyRate: double, status: K2703047_RoomStatus, baseCapacity: int): K2703047_Room
+    }
+
+    class K2703047_Guest {
+        - nicOrPassport: String
+        - fullName: String
+        - contactNumber: String
+        - emailAddress: String
+        - registrationTimestamp: LocalDateTime
+        + K2703047_Guest(nicOrPassport: String, fullName: String, contactNumber: String, emailAddress: String)
+        + {static} isValidNicOrPassport(value: String): boolean
+        + {static} isValidPhone(value: String): boolean
+        + {static} isValidEmail(value: String): boolean
+        + getNicOrPassport(): String
+        + getFullName(): String
+        + getContactNumber(): String
+        + getEmailAddress(): String
+        + getRegistrationTimestamp(): LocalDateTime
+    }
+
+    class K2703047_Reservation {
+        + {static} BOOKING_ADVANCE_AMOUNT: double = 10000.0
+        + {static} MIN_ADVANCE_DAYS: int = 2
+        + {static} CANCELLATION_DEADLINE_HOURS: int = 24
+        - bookingId: String
+        - guest: K2703047_Guest
+        - room: K2703047_Room
+        - checkInDate: LocalDate
+        - checkOutDate: LocalDate
+        - numberOfGuests: int
+        - bookingTimestamp: LocalDateTime
+        - advancePaid: double
+        - advanceRefunded: boolean
+        - status: K2703047_ReservationStatus
+        + K2703047_Reservation(bookingId: String, guest: K2703047_Guest, room: K2703047_Room, checkInDate: LocalDate, checkOutDate: LocalDate, numberOfGuests: int, bookingTimestamp: LocalDateTime)
+        + {static} validateDates(checkIn: LocalDate, checkOut: LocalDate, bookingDate: LocalDate): void
+        + overlapsWith(otherCheckIn: LocalDate, otherCheckOut: LocalDate): boolean
+        + isEligibleForCancellation(currentDateTime: LocalDateTime): boolean
+        + cancelReservation(currentDateTime: LocalDateTime): boolean
+        + getNumberOfNights(): long
+        + getBookingId(): String
+        + getGuest(): K2703047_Guest
+        + getRoom(): K2703047_Room
+        + getCheckInDate(): LocalDate
+        + getCheckOutDate(): LocalDate
+        + getNumberOfGuests(): int
+        + getAdvancePaid(): double
+        + isAdvanceRefunded(): boolean
+        + getStatus(): K2703047_ReservationStatus
+    }
+
+    class K2703047_Invoice {
+        + {static} LONG_STAY_DISCOUNT_PERCENTAGE: double = 12.0
+        + {static} LONG_STAY_MIN_NIGHTS: long = 5
+        - invoiceNumber: String
+        - invoiceDateTime: LocalDateTime
+        - reservation: K2703047_Reservation
+        - dailyRate: double
+        - numberOfNights: long
+        - baseRoomCharge: double
+        - numberOfGuests: int
+        - roomCapacity: int
+        - extraGuestCount: int
+        - extraGuestRate: double
+        - extraGuestCharges: double
+        - discountApplied: boolean
+        - discountRate: double
+        - discountAmount: double
+        - netRoomCharge: double
+        - taxRate: double
+        - taxAmount: double
+        - totalGrossCharge: double
+        - bookingAdvanceDeducted: double
+        - finalPayableAmount: double
+        + K2703047_Invoice(reservation: K2703047_Reservation)
+        + generateInvoiceText(): String
+        + exportToFile(targetPath: String): boolean
+        + getFinalPayableAmount(): double
+    }
+}
+
+package "k2703047.smartstay.service" {
+
+    interface K2703047_IRoomService {
+        + addRoom(room: K2703047_Room): boolean
+        + updateRoom(roomId: String, updatedRoom: K2703047_Room): boolean
+        + removeRoom(roomId: String): boolean
+        + updateRoomStatus(roomId: String, newStatus: K2703047_RoomStatus): boolean
+        + getRoomById(roomId: String): K2703047_Room
+        + getAllRooms(): List<K2703047_Room>
+        + getRoomsByType(roomType: K2703047_RoomType): List<K2703047_Room>
+        + searchAvailableRooms(roomType: K2703047_RoomType, checkIn: LocalDate, checkOut: LocalDate, resService: K2703047_IReservationService): List<K2703047_Room>
+        + roomExists(roomId: String): boolean
+    }
+
+    class K2703047_RoomService implements K2703047_IRoomService {
+        - roomRegistry: Map<String, K2703047_Room>
+        + K2703047_RoomService()
+    }
+
+    interface K2703047_IGuestService {
+        + registerGuest(guest: K2703047_Guest): boolean
+        + getGuestByNicOrPassport(nicOrPassport: String): K2703047_Guest
+        + getAllGuests(): List<K2703047_Guest>
+        + searchGuestsByName(nameKeyword: String): List<K2703047_Guest>
+        + guestExists(nicOrPassport: String): boolean
+    }
+
+    class K2703047_GuestService implements K2703047_IGuestService {
+        - guestDirectory: Map<String, K2703047_Guest>
+        + K2703047_GuestService()
+    }
+
+    interface K2703047_IReservationService {
+        + makeReservation(guest: K2703047_Guest, room: K2703047_Room, checkIn: LocalDate, checkOut: LocalDate, guests: int): K2703047_Reservation
+        + cancelReservation(bookingId: String, cancellationTime: LocalDateTime): boolean
+        + getReservationById(bookingId: String): K2703047_Reservation
+        + getAllReservations(): List<K2703047_Reservation>
+        + searchReservationsByGuestName(keyword: String): List<K2703047_Reservation>
+        + getReservationsByCheckInDate(checkInDate: LocalDate): List<K2703047_Reservation>
+        + getActiveReservationsForRoom(roomId: String): List<K2703047_Reservation>
+        + hasRoomDateConflict(roomId: String, checkIn: LocalDate, checkOut: LocalDate, excludeId: String): boolean
+        + generateInvoice(bookingId: String): K2703047_Invoice
+        + binarySearchByBookingId(bookingId: String): K2703047_Reservation
+    }
+
+    class K2703047_ReservationService implements K2703047_IReservationService {
+        - reservationMap: Map<String, K2703047_Reservation>
+        - reservationList: List<K2703047_Reservation>
+        - checkInDateIndex: TreeMap<LocalDate, List<K2703047_Reservation>>
+        - bookingSequence: AtomicInteger
+        + K2703047_ReservationService()
+    }
+
+    class K2703047_HotelSystem <<Facade>> {
+        - roomService: K2703047_IRoomService
+        - guestService: K2703047_IGuestService
+        - reservationService: K2703047_IReservationService
+        + K2703047_HotelSystem()
+        + addRoom(room: K2703047_Room): boolean
+        + removeRoom(roomId: String): boolean
+        + updateRoomStatus(roomId: String, status: K2703047_RoomStatus): boolean
+        + getAllRooms(): List<K2703047_Room>
+        + registerGuest(nic: String, name: String, phone: String, email: String): boolean
+        + makeReservation(nic: String, roomId: String, checkIn: LocalDate, checkOut: LocalDate, guests: int): K2703047_Reservation
+        + cancelReservation(bookingId: String): boolean
+        + generateInvoice(bookingId: String): K2703047_Invoice
+        + searchReservationBinary(bookingId: String): K2703047_Reservation
+    }
+}
+
+package "k2703047.smartstay.ui" {
+    class K2703047_CLIView {
+        - hotelSystem: K2703047_HotelSystem
+        - scanner: Scanner
+        + K2703047_CLIView(hotelSystem: K2703047_HotelSystem)
+        + start(): void
+    }
+
+    class K2703047_GUIView extends javax.swing.JFrame {
+        - hotelSystem: K2703047_HotelSystem
+        + {static} launch(hotelSystem: K2703047_HotelSystem): void
+    }
+}
+
+package "k2703047.smartstay" {
+    class K2703047_Main {
+        + {static} main(args: String[]): void
+    }
+}
+
+' Relationships
+K2703047_Room o-- K2703047_RoomType : has type
+K2703047_Room o-- K2703047_BedType : has bed
+K2703047_Room o-- K2703047_RoomStatus : has status
+
+K2703047_Reservation o-- K2703047_Guest : belongs to
+K2703047_Reservation o-- K2703047_Room : reserves
+K2703047_Reservation o-- K2703047_ReservationStatus : has status
+
+K2703047_Invoice *-- K2703047_Reservation : generates for
+
+K2703047_RoomService o-- "0..*" K2703047_Room : manages
+K2703047_GuestService o-- "0..*" K2703047_Guest : manages
+K2703047_ReservationService o-- "0..*" K2703047_Reservation : manages
+
+K2703047_HotelSystem *-- K2703047_IRoomService : coordinates
+K2703047_HotelSystem *-- K2703047_IGuestService : coordinates
+K2703047_HotelSystem *-- K2703047_IReservationService : coordinates
+
+K2703047_CLIView --> K2703047_HotelSystem : uses
+K2703047_GUIView --> K2703047_HotelSystem : uses
+K2703047_Main --> K2703047_HotelSystem : bootstraps
+K2703047_RoomFactory ..> K2703047_Room : instantiates
+
+@enduml
